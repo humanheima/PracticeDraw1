@@ -2,22 +2,37 @@ package com.hencoder.hencoderpracticedraw1.practice;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.hencoder.hencoderpracticedraw1.ScreenUtil;
+
 public class Practice6DrawLineView extends View {
+
+    private Paint paint;
+
+    private float[] points = {20, 20, 120, 20, 70, 20, 70, 120, 20, 120, 120, 120, 150, 20, 250,
+            20, 150, 20, 150, 120, 250, 20, 250, 120, 150, 120, 250, 120};
 
     public Practice6DrawLineView(Context context) {
         super(context);
+        initPaint();
     }
 
     public Practice6DrawLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initPaint();
     }
 
     public Practice6DrawLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initPaint();
+    }
+
+    private void initPaint() {
+        paint = new Paint();
     }
 
     @Override
@@ -25,5 +40,9 @@ public class Practice6DrawLineView extends View {
         super.onDraw(canvas);
 
 //        练习内容：使用 canvas.drawLine() 方法画直线
+        canvas.drawLine(0, 0, 100, 100, paint);
+        //最后画出来的线的个数 count>>2
+        //canvas.drawLines(points, paint);
+        canvas.drawLines(points, 4, 24, paint);
     }
 }
