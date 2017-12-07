@@ -32,6 +32,9 @@ public class PieChartView extends View {
     private DecimalFormat format;
     private OnItemClickListener itemClickListener;
     private float offset;
+    //当在第三象限和第四象限绘制文字时候，距离横线的间距
+    private float upTextSpace;
+    private float smallCircleRadius;
 
     private static final String TAG = "PieChartView";
 
@@ -51,10 +54,14 @@ public class PieChartView extends View {
 
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(sp2px(16));
+        paint.setStrokeWidth(dp2px(1));
         rectF = new RectF();
         format = new DecimalFormat("00.00");
         path = new Path();
         offset = dp2px(10);
+        upTextSpace = sp2px(3);
+        smallCircleRadius = sp2px(2);
     }
 
     public void setsRadius(float sRadius) {
@@ -111,55 +118,80 @@ public class PieChartView extends View {
             //这两个点作为短线的结束点
             float arcCenterX2;
             float arcCenterY2;
-            paint.setColor(Color.BLACK);
+
+            String text;
+            if (total > 0) {
+                text = format.format(pieEntries.get(i).getNumber() / total * 100) + "%";
+            } else {
+                text = "0.00%";
+            }
+            offset = paint.measureText(text);
+            path.reset();
+
             //分象限 利用三角函数 来求出每个短线的起始点和结束点，并画出短线和百分比。
             if (arcCenterC >= 0 && arcCenterC < 90) {
                 arcCenterX = (float) (centerX + radiusT * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY = (float) (centerY + radiusT * Math.sin(Math.PI * arcCenterC / 180));
                 arcCenterX2 = (float) (arcCenterX + dp2px(10) * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY2 = (float) (arcCenterY + dp2px(10) * Math.sin(Math.PI * arcCenterC / 180));
-                canvas.drawLine(arcCenterX, arcCenterY, arcCenterX2, arcCenterY2, paint);
-                if (total > 0) {
-                    canvas.drawText(format.format(pieEntries.get(i).getNumber() / total * 100) + "%", arcCenterX2, arcCenterY2 + paint.getTextSize() / 2, paint);
-                } else {
-                    canvas.drawText("0.00%", arcCenterX2, arcCenterY2 + paint.getTextSize() / 2, paint);
-                }
+
+                path.moveTo(arcCenterX, arcCenterY);
+                path.lineTo(arcCenterX2, arcCenterY2);
+                path.lineTo(arcCenterX2 + offset, arcCenterY2);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawPath(path, paint);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawCircle(arcCenterX2 + offset, arcCenterY2,smallCircleRadius,paint);
+                canvas.drawText(text, arcCenterX2, arcCenterY2 + paint.getTextSize(), paint);
+
             } else if (arcCenterC >= 90 && arcCenterC < 180) {
                 arcCenterC = 180 - arcCenterC;
                 arcCenterX = (float) (centerX - radiusT * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY = (float) (centerY + radiusT * Math.sin(Math.PI * arcCenterC / 180));
                 arcCenterX2 = (float) (arcCenterX - dp2px(10) * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY2 = (float) (arcCenterY + dp2px(10) * Math.sin(Math.PI * arcCenterC / 180));
-                canvas.drawLine(arcCenterX, arcCenterY, arcCenterX2, arcCenterY2, paint);
-                if (total > 0) {
-                    canvas.drawText(format.format(pieEntries.get(i).getNumber() / total * 100) + "%", (float) (arcCenterX2 - paint.getTextSize() * 3.5), arcCenterY2 + paint.getTextSize() / 2, paint);
-                } else {
-                    canvas.drawText("0.00%", (float) (arcCenterX2 - paint.getTextSize() * 3.5), arcCenterY2 + paint.getTextSize() / 2, paint);
-                }
+
+                path.moveTo(arcCenterX, arcCenterY);
+                path.lineTo(arcCenterX2, arcCenterY2);
+                path.lineTo(arcCenterX2 - offset, arcCenterY2);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawPath(path, paint);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawCircle(arcCenterX2 - offset, arcCenterY2,smallCircleRadius,paint);
+                canvas.drawText(text, arcCenterX2 - offset, arcCenterY2 + paint.getTextSize(), paint);
+
             } else if (arcCenterC >= 180 && arcCenterC < 270) {
                 arcCenterC = 270 - arcCenterC;
                 arcCenterX = (float) (centerX - radiusT * Math.sin(Math.PI * arcCenterC / 180));
                 arcCenterY = (float) (centerY - radiusT * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterX2 = (float) (arcCenterX - dp2px(10) * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY2 = (float) (arcCenterY - dp2px(10) * Math.sin(Math.PI * arcCenterC / 180));
-                canvas.drawLine(arcCenterX, arcCenterY, arcCenterX2, arcCenterY2, paint);
-                if (total > 0) {
-                    canvas.drawText(format.format(pieEntries.get(i).getNumber() / total * 100) + "%", (float) (arcCenterX2 - paint.getTextSize() * 3.5), arcCenterY2, paint);
-                } else {
-                    canvas.drawText("0.00%", (float) (arcCenterX2 - paint.getTextSize() * 3.5), arcCenterY2, paint);
-                }
+
+                path.moveTo(arcCenterX, arcCenterY);
+                path.lineTo(arcCenterX2, arcCenterY2);
+                path.lineTo(arcCenterX2 - offset, arcCenterY2);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawPath(path, paint);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawCircle(arcCenterX2 - offset, arcCenterY2, smallCircleRadius, paint);
+                canvas.drawText(text, arcCenterX2 - offset, arcCenterY2 - upTextSpace, paint);
+
             } else if (arcCenterC >= 270 && arcCenterC < 360) {
                 arcCenterC = 360 - arcCenterC;
                 arcCenterX = (float) (centerX + radiusT * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY = (float) (centerY - radiusT * Math.sin(Math.PI * arcCenterC / 180));
                 arcCenterX2 = (float) (arcCenterX + dp2px(10) * Math.cos(Math.PI * arcCenterC / 180));
                 arcCenterY2 = (float) (arcCenterY - dp2px(10) * Math.sin(Math.PI * arcCenterC / 180));
-                canvas.drawLine(arcCenterX, arcCenterY, arcCenterX2, arcCenterY2, paint);
-                if (total > 0) {
-                    canvas.drawText(format.format(pieEntries.get(i).getNumber() / total * 100) + "%", arcCenterX2, arcCenterY2, paint);
-                } else {
-                    canvas.drawText("0.00%", arcCenterX2, arcCenterY2, paint);
-                }
+
+                path.moveTo(arcCenterX, arcCenterY);
+                path.lineTo(arcCenterX2, arcCenterY2);
+                path.lineTo(arcCenterX2 + offset, arcCenterY2);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawPath(path, paint);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawCircle(arcCenterX2 + offset, arcCenterY2, smallCircleRadius, paint);
+                canvas.drawText(text, arcCenterX2, arcCenterY2 - upTextSpace, paint);
+
             }
             pieEntries.get(i).setStartC(startC);
             pieEntries.get(i).setEndC(startC + sweep);
@@ -226,6 +258,11 @@ public class PieChartView extends View {
 
     private float dp2px(float dpVal) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal,
+                getResources().getDisplayMetrics());
+    }
+
+    private float sp2px(float spVal) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal,
                 getResources().getDisplayMetrics());
     }
 }
