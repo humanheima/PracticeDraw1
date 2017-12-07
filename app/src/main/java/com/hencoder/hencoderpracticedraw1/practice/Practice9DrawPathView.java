@@ -41,8 +41,8 @@ public class Practice9DrawPathView extends View {
         paint.setStyle(Paint.Style.FILL);
         path = new Path();
         point = new Point(200, 200);
-        rectF1 = new RectF(point.x, point.y, point.x+200, point.y+200);
-        rectF2 = new RectF(point.x+200, point.y, point.x+400, point.y+200);
+        rectF1 = new RectF(point.x, point.y, point.x + 200, point.y + 200);
+        rectF2 = new RectF(point.x + 200, point.y, point.x + 400, point.y + 200);
     }
 
     @Override
@@ -57,8 +57,13 @@ public class Practice9DrawPathView extends View {
         canvas.drawPath(path, paint);
 
         //        练习内容：使用 canvas.drawPath() 方法画心形
-       /* path.addArc(50,50,200,200,-225,225);
+        /*path.addArc(50,50,200,200,-225,225);
         path.arcTo(200, 50, 350, 200, -180, 225, false);
+        path.lineTo(200,300);
+        canvas.drawPath(path,paint);*/
+        /*paint.setStyle(Paint.Style.STROKE);
+        path.addCircle(400,400,100, Path.Direction.CW);
+        //path.arcTo(200, 50, 350, 200, -180, 225, false);
         path.lineTo(200,300);
         canvas.drawPath(path,paint);*/
     }

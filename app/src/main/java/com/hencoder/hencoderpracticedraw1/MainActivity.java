@@ -1,5 +1,11 @@
 package com.hencoder.hencoderpracticedraw1;
 
+import android.graphics.BitmapShader;
+import android.graphics.ComposeShader;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
@@ -14,6 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    SweepGradient sweepGradient;
+    BitmapShader bitmapShader;
+    ComposeShader composeShader;
+    LightingColorFilter lightingColorFilter;
+    PorterDuffColorFilter porterDuffColorFilter;
+    PorterDuffXfermode porterDuffXfermode;
     TabLayout tabLayout;
     ViewPager pager;
     List<PageModel> pageModels = new ArrayList<>();
