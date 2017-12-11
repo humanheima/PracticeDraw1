@@ -40,7 +40,6 @@ public class PieChartView extends View {
 
     public PieChartView(Context context) {
         this(context, null);
-
     }
 
     public PieChartView(Context context, @Nullable AttributeSet attrs) {
@@ -141,7 +140,7 @@ public class PieChartView extends View {
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawPath(path, paint);
                 paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(arcCenterX2 + offset, arcCenterY2,smallCircleRadius,paint);
+                canvas.drawCircle(arcCenterX2 + offset+smallCircleRadius, arcCenterY2,smallCircleRadius,paint);
                 canvas.drawText(text, arcCenterX2, arcCenterY2 + paint.getTextSize(), paint);
 
             } else if (arcCenterC >= 90 && arcCenterC < 180) {
@@ -157,7 +156,7 @@ public class PieChartView extends View {
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawPath(path, paint);
                 paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(arcCenterX2 - offset, arcCenterY2,smallCircleRadius,paint);
+                canvas.drawCircle(arcCenterX2 - offset-smallCircleRadius, arcCenterY2,smallCircleRadius,paint);
                 canvas.drawText(text, arcCenterX2 - offset, arcCenterY2 + paint.getTextSize(), paint);
 
             } else if (arcCenterC >= 180 && arcCenterC < 270) {
@@ -173,7 +172,7 @@ public class PieChartView extends View {
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawPath(path, paint);
                 paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(arcCenterX2 - offset, arcCenterY2, smallCircleRadius, paint);
+                canvas.drawCircle(arcCenterX2 - offset-smallCircleRadius, arcCenterY2, smallCircleRadius, paint);
                 canvas.drawText(text, arcCenterX2 - offset, arcCenterY2 - upTextSpace, paint);
 
             } else if (arcCenterC >= 270 && arcCenterC < 360) {
@@ -189,7 +188,7 @@ public class PieChartView extends View {
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawPath(path, paint);
                 paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(arcCenterX2 + offset, arcCenterY2, smallCircleRadius, paint);
+                canvas.drawCircle(arcCenterX2 + offset+smallCircleRadius, arcCenterY2, smallCircleRadius, paint);
                 canvas.drawText(text, arcCenterX2, arcCenterY2 - upTextSpace, paint);
 
             }
