@@ -142,7 +142,6 @@ public class HistogramView extends View {
                 break;
         }
         return super.onTouchEvent(event);
-
     }
 
     private float getMax() {

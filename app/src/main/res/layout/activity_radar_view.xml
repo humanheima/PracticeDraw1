@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hencoder.hencoderpracticedraw1.practice.RadarView
+        android:id="@+id/radarView"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/holo_purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lineColor="@android:color/black"
+        app:lineWidth="1dp"
+        app:pointColor="@color/colorAccent"
+        app:pointRadius="2dp"
+        app:regionAlpha="160"
+        app:regionColor="@color/chart_green"
+        app:textColor="@color/colorAccent"
+        app:textSize="12sp" />
+
+</android.support.constraint.ConstraintLayout>
